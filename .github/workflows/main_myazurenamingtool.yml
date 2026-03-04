@@ -16,19 +16,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET 8 (LTS)
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'   # LTS stable
+          dotnet-version: '8.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore myAzureNamingTool/myAzureNamingTool.csproj
+      - name: Restore
+        run: dotnet restore src/AzureNamingTool.csproj
 
       - name: Build
-        run: dotnet build myAzureNamingTool/myAzureNamingTool.csproj --configuration Release --no-restore
+        run: dotnet build src/AzureNamingTool.csproj --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish myAzureNamingTool/myAzureNamingTool.csproj -c Release -o ${{ github.workspace }}/publish --no-build
+        run: dotnet publish src/AzureNamingTool.csproj --configuration Release --no-build -o ${{ github.workspace }}/publish
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
